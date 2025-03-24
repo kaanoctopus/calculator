@@ -6,25 +6,25 @@
 - **Tailwind CSS**: Hızlı ve duyarlı stil vermek için.
 
 ## Kurulum ve Kullanım
-1. Projeyi klonlayın:
+Projeyi klonlayın
 ```bash
-git clone <repo-url>
+git clone https://github.com/kaanoctopus/calculator
 cd calculator
 ```
 
-2. Bağımlılıkları kurun:
+Bağımlılıkları kurun
 ```bash
 cd calculator && npm install
 cd ../backend && npm install
 ```
 
-3. Projeyi başlatın:
+Projeyi başlatın
 ```bash
 cd backend && node index.js
 cd ../calculator && npm start
 ```
 
-4. Testlerin Çalıştırmak için:
+Testlerin Çalıştırmak için:
 ```bash
 cd calculator
 npm test
