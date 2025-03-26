@@ -9,6 +9,7 @@ class CalculationController {
     try {
       const result = this.calculationService.evaluateExpression(expression);
       res.header("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
       res.header(
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept"
