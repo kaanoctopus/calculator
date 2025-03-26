@@ -5,11 +5,16 @@ const calculationRoutes = require('../../routes/CalculationRoutes');
 
 const app = express();
 
-const options = {
-    origin: 'https://calculatoroctopus.netlify.app/',
-}
 
-app.use(cors(options));
+app.use(
+    cors({
+      allowedHeaders: ["authorization", "Content-Type"], // you can change the headers
+      exposedHeaders: ["authorization"], // you can change the headers
+      origin: "*",
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+      preflightContinue: false
+    })
+  )
 app.use(express.json());
 app.use('/api/', calculationRoutes);
 
