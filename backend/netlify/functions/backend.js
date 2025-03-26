@@ -5,7 +5,11 @@ const calculationRoutes = require('../../routes/CalculationRoutes');
 
 const app = express();
 
-app.use(cors());
+const options = {
+    origin: 'https://calculatoroctopus.netlify.app/',
+}
+
+app.use(cors(options));
 app.use(express.json());
 app.use('/api/', calculationRoutes);
 
