@@ -7,6 +7,6 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/', calculationRoutes);
+app.use('/api/', calculationRoutes);
 
 module.exports.handler = serverless(app);
