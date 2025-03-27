@@ -14,12 +14,17 @@ export function useCalculatorController() {
       try {
         const res = await evaluateExpression(expression);
         setResult(res);
+        setExpression('');
         setHistory([`${expression} = ${res}`, ...history]);
         setJustCalculated(true);
       } catch (err) {
         setResult('Error');
       }
-    } else {
+    } else if (key === 'c' || key === 'C') {
+      setResult('');
+      setExpression('');
+    }
+    else {
       if (justCalculated) {
         if (isOperator(key)) {
           setExpression(result + key);

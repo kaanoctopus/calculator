@@ -7,7 +7,7 @@ export default function Keypad({ onKeyPress }) {
       '6', '7', '8',
       '9', '/', '*',
       '-', '+', '.',
-      '(', ')', '='
+      '(', ')', '=', 'c'
     ];
   
     return (
