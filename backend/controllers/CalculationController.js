@@ -1,6 +1,7 @@
 class CalculationController {
   constructor(calculationService) {
     this.calculationService = calculationService;
+    
     this.calculate = this.calculate.bind(this);
     this.getHistory = this.getHistory.bind(this);
     this.clearHistory = this.clearHistory.bind(this);

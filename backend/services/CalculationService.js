@@ -3,7 +3,7 @@ const Calculation = require("../models/Calculation");
 const User = require("../models/User");
 
 class CalculationService {
-  static async evaluateExpression(expression, userId) {
+  async evaluateExpression(expression, userId) {
     try {
       const result = math.evaluate(expression).toString();
       const calculation = new Calculation({ userId, expression, result });
@@ -18,11 +18,11 @@ class CalculationService {
     }
   }
 
-  static async getHistory(userId) {
+  async getHistory(userId) {
     return Calculation.find({ userId }).sort({ createdAt: -1 });
   }
 
-  static async clearHistory(userId) {
+  async clearHistory(userId) {
     await Calculation.deleteMany({ userId });
     await User.findByIdAndUpdate(userId, { history: [] });
   }
