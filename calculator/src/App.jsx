@@ -6,14 +6,17 @@ import History from './components/History';
 import Login from './components/Login';
 import Register from './components/Register';
 import useKeyboard from './hooks/useKeyboard';
-import { getUser, logoutUser } from './services/authService';
+import ProfileModal from "./components/ProfileModal";
+import { getUser, logoutUser, updateUser, deleteUser } from './services/authService';
 
 export default function App() {
   const { expression, result, history, handleKeyPress, handleClearHistory, loadHistory } = useCalculatorController();
   
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [notification, setNotification] = useState(""); //
+  const [notification, setNotification] = useState("");
+  const [profileData, setProfileData] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useKeyboard(user ? handleKeyPress : () => {});
 
@@ -28,6 +31,10 @@ export default function App() {
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
   }, []);
+
+  const handleUpdateUser = (updatedUser) => {
+    setUser(updatedUser); 
+  };
 
   const handleLogin = async () => {
     try {
@@ -44,6 +51,37 @@ export default function App() {
     setTimeout(() => setNotification(""), 3000);
   };
 
+  const handleGetProfile = async () => {
+    try {
+      const profile = await getUser();
+      setProfileData(profile);
+    } catch (error) {
+      console.error("Failed to fetch profile:", error);
+    }
+  };
+
+  const handleUpdateProfile = async () => {
+    try {
+      const updatedUser = await updateUser();
+      setUser(updatedUser);
+      setNotification("Profile updated successfully.");
+      setTimeout(() => setNotification(""), 3000);
+    } catch (error) {
+      console.error("Profile update failed:", error);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteUser();
+      logoutUser();
+      setUser(null);
+      setNotification("Account deleted.");
+    } catch (error) {
+      console.error("Failed to delete account:", error);
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -57,12 +95,36 @@ export default function App() {
           <History items={history} onClear={handleClearHistory} />
           <Display value={result || expression} />
           <Keypad onKeyPress={handleKeyPress} />
+
+          <div className="mt-4 p-2 bg-gray-100 rounded-lg">
+            <h3 className="text-lg font-bold">User Profile</h3>
+            <button className="w-full p-2 bg-blue-500 text-white rounded" onClick={handleGetProfile}>Get Profile</button>
+            <button className="w-full p-2 mt-2 bg-yellow-500 text-white rounded" onClick={() => setIsModalOpen(true)}>Update Profile</button>
+            <button className="w-full p-2 mt-2 bg-red-500 text-white rounded" onClick={handleDeleteAccount}>Delete Account</button>
+
+            {profileData && (
+              <div className="mt-2 p-2 border rounded bg-white">
+                <p><strong>Name:</strong> {profileData.firstName}</p>
+                <p><strong>Surname:</strong> {profileData.lastName}</p>
+                <p><strong>Email:</strong> {profileData.email}</p>
+              </div>
+            )}
+          </div>
+        
         </>
       ) : (
         <>
           <Login onLogin={handleLogin} />
           <Register onRegister={handleRegister} />
         </>
+      )}
+      
+      {isModalOpen && (
+        <ProfileModal
+          user={user}
+          onClose={() => setIsModalOpen(false)}
+          onUpdate={handleUpdateUser}
+        />
       )}
     </div>
   );
