@@ -202,54 +202,54 @@ curl -X PATCH https://api.example.com/users/1 -d '{"age": 29}' -H "Content-Type:
 curl -X DELETE https://api.example.com/users/1
 ```
 
-### REST API Nedir?
+# REST API Nedir?
 
 Açılımı "Representational state transfer" dır. İnternet üzerinden iletişim için kullanılan en yaygın metottur. HTTP metodlarının kullandığı sistemdir, statelesstır her istek birbirinden bağımsız çalışır.
 
-## Kaynak odaklı tasarım
+### Kaynak odaklı tasarım
 
 REST API'lerinde her şeyin bir kaynak olarak kabul edilmesidir. Kaynaklar, API'nin yönettiği verileri temsil eder ve her kaynağa benzersiz bir URI ile erişilir.
 
-## URI standartları
+### URI standartları
 URI internetteki kaynakları bulmak için kullanılır. Standart olarak düzgün okunaklı olmasını söyleyebiliriz. URL nin süpersetidir.
 
-## Stateless mimari
+### Stateless mimari
 
 Her HTTP isteği, önceki isteklerden bağımsızdır. Sunucu, istemciye her istekte kimlik doğrulama gibi bilgileri göndermelidir.
 
-## Best practice örnekleri
+### Best practice örnekleri
 yüklem yerine isim kullanmak örneğin
 createUser yerine user
 
-### Authentication vs Authorization
+# Authentication vs Authorization
 
-## Authentication
+### Authentication
 
 Kullanıcının kim olduğunu tanıma sürecidir
 
-## Authorization
+### Authorization
 
 Kullanıcının hangi kaynaklara erişebileceğini belirleme sürecidir.
 
-## Farkları
+### Farkları
 
 Farklarını anlamak için bir binada kullanılan giriş kartlarını düşünebiliriz, kartın verilme işlemi Authentication işlemine benzerken,
 o kartı kullanarak odalara girmek Authorization işlemi olacaktır. Kart kişinin kim olduğunu kanıtlayacaktır. Ayrıca bu kartın değiştirilmediğine emin olmak için kontroller yapılır
 
-### JWT nedir?
+# JWT nedir?
 
 Authorization için kullanılan bir yöntemdir, buradaki önemli olan nokta authorization key inin server tarafında değil
 client tarafında tutuluyor olmasıdır.
 
-## Ne işe yarar?
+### Ne işe yarar?
 
 Kullanıcının istenilen verilere erişme hakkı olup olmadığını kontrol etmek için kullanılır.
 
-## Neden Kullanılır?
+### Neden Kullanılır?
 
 Mikroservislerin authenticationınını birbirine bağlamak için kullanılabilir.
 
-## Örnek
+### Örnek
 
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
 
