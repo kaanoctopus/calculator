@@ -1,37 +1,52 @@
-import { useState } from 'react';
-import { evaluateExpression } from '../services/calculatorService';
+import { useState, useEffect } from "react";
+import {
+  evaluateExpression,
+  fetchHistory,
+  clearHistory,
+} from "../services/calculatorService";
 
 export function useCalculatorController() {
-  const [expression, setExpression] = useState('');
-  const [result, setResult] = useState('');
+  const [expression, setExpression] = useState("");
+  const [result, setResult] = useState("");
   const [history, setHistory] = useState([]);
   const [justCalculated, setJustCalculated] = useState(false);
 
-  const isOperator = (key) => ['+', '-', '*', '/'].includes(key);
+  useEffect(() => {
+    async function loadHistory() {
+      try {
+        const data = await fetchHistory();
+        setHistory(data.map((calc) => `${calc.expression} = ${calc.result}`));
+      } catch (err) {
+        console.error("Failed to load history:", err);
+      }
+    }
+    loadHistory();
+  }, []);
+
+  const isOperator = (key) => ["+", "-", "*", "/"].includes(key);
 
   const handleKeyPress = async (key) => {
-    if (key === '=') {
+    if (key === "=") {
       try {
         const res = await evaluateExpression(expression);
         setResult(res);
-        setExpression('');
+        setExpression("");
         setHistory([`${expression} = ${res}`, ...history]);
         setJustCalculated(true);
       } catch (err) {
-        setResult('Error');
+        setResult("Error");
       }
-    } else if (key === 'c' || key === 'C') {
-      setResult('');
-      setExpression('');
-    }
-    else {
+    } else if (key === "c" || key === "C") {
+      setResult("");
+      setExpression("");
+    } else {
       if (justCalculated) {
         if (isOperator(key)) {
           setExpression(result + key);
         } else {
           setExpression(key);
         }
-        setResult('');
+        setResult("");
         setJustCalculated(false);
       } else {
         setExpression((prev) => prev + key);
@@ -39,8 +54,13 @@ export function useCalculatorController() {
     }
   };
 
-  const handleClearHistory = () => {
-    setHistory([]);
+  const handleClearHistory = async () => {
+    try {
+      await clearHistory();
+      setHistory([]);
+    } catch (err) {
+      console.error("Failed to clear history:", err);
+    }
   };
 
   return {

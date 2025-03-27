@@ -2,19 +2,40 @@ class CalculationController {
   constructor(calculationService) {
     this.calculationService = calculationService;
     this.calculate = this.calculate.bind(this);
+    this.getHistory = this.getHistory.bind(this);
+    this.clearHistory = this.clearHistory.bind(this);
   }
 
-  calculate(req, res) {
+  async calculate(req, res) {
     const { expression } = req.body;
+    const userId = req.userId;
+
     try {
-      const result = this.calculationService.evaluateExpression(expression);
-      res.header("Access-Control-Allow-Origin", "*");
-      res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
+      const result = await this.calculationService.evaluateExpression(
+        expression,
+        userId
       );
       res.json(result);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  }
+
+  async getHistory(req, res) {
+    const userId = req.userId;
+    try {
+      const history = await this.calculationService.getHistory(userId);
+      res.json({ history });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  }
+
+  async clearHistory(req, res) {
+    const userId = req.userId;
+    try {
+      await this.calculationService.clearHistory(userId);
+      res.json({ message: "History cleared" });
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
