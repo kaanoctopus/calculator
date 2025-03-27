@@ -6,6 +6,11 @@
     to = "/.netlify/functions/backend/:splat"
     status = 200
 
+[[redirects]]
+    from = "/api/auth/*"
+    to = "/.netlify/functions/backend/auth/:splat"
+    status = 200
+
 [[headers]]
   for = "/*"
   [headers.values]

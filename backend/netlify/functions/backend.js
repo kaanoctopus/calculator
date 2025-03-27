@@ -23,6 +23,6 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 app.use("/api/", calculationRoutes);
-app.use("/api/", authRoutes);
+app.use("/api/auth", authRoutes);
 
 module.exports.handler = serverless(app);
