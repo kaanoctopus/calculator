@@ -1,4 +1,5 @@
 ## Kullanılan Teknolojiler ve Nedenleri
+
 - **React.js**: Komponent tabanlı kullanıcı arayüzü oluşturmak için.
 - **Express.js**: Backend API oluşturmak için.
 - **mathjs**: Matematiksel işlem hesaplamaları için tehlikeli olan `eval` yerine tercih edildi.
@@ -8,25 +9,30 @@
 - **Netlify Functions**: Backend fonksiyonları için serverless yapılar.
 
 ## Kurulum ve Kullanım
+
 Projeyi klonlayın
+
 ```bash
 git clone https://github.com/kaanoctopus/calculator
 cd calculator
 ```
 
 Bağımlılıkları kurun
+
 ```bash
 cd calculator && npm install
 cd ../backend && npm install
 ```
 
 Projeyi başlatın
+
 ```bash
 cd backend && node index.js
 cd ../calculator && npm start
 ```
 
 Testlerin Çalıştırmak için:
+
 ```bash
 cd calculator
 npm test
@@ -37,6 +43,7 @@ npm test
 ### Auth Endpoints
 
 - **POST `/api/auth/register`**
+
   - Kullanıcı kaydı için.
   - **Request Body**:
     ```json
@@ -55,6 +62,7 @@ npm test
     ```
 
 - **POST `/api/auth/login`**
+
   - Kullanıcı giriş işlemi.
   - **Request Body**:
     ```json
@@ -71,6 +79,7 @@ npm test
     ```
 
 - **GET `/api/auth/me`**
+
   - Kullanıcının profil bilgilerini almak için (JWT gerektirir).
   - **Response**:
     ```json
@@ -82,6 +91,7 @@ npm test
     ```
 
 - **PUT `/api/auth/me`**
+
   - Kullanıcının profilini güncellemek için. (JWT gerektirir)
   - **Request Body**:
     ```json
@@ -99,6 +109,7 @@ npm test
     ```
 
 - **DELETE `/api/auth/me`**
+
   - Kullanıcıyı silmek için. (JWT gerektirir)
   - **Response**:
     ```json
@@ -113,6 +124,7 @@ npm test
 ### Calculator Endpoints
 
 - **POST `/api/calculate`**
+
   - Matematiksel bir ifade alır ve sonucu döndürür.
   - **Request Body**:
     ```json
@@ -128,6 +140,7 @@ npm test
     ```
 
 - **GET `/api/history`**
+
   - Kullanıcının geçmiş hesaplamalarını alır (JWT gerektirir).
   - **Response**:
     ```json
@@ -149,3 +162,101 @@ npm test
       "result": 6
     }
     ```
+
+## Araştırma Konuları
+
+### HTTP Metodları
+
+1. **GET** – Veri çekme
+   Sunucudan veri almak için kullanılır.
+
+```bash
+curl -X GET https://api.example.com/users
+```
+
+2. **POST** – Veri oluşturma
+   Sunucuya yeni veri göndermek için kullanılır.
+
+```bash
+curl -X POST https://api.example.com/users -d '{"name": "John Doe", "age": 30}' -H "Content-Type: application/json"
+```
+
+3. **PUT** – Veri güncelleme
+   Var olan bir kaynağın verilerini günceller.
+
+```bash
+curl -X PUT https://api.example.com/users/1 -d '{"name": "Jane Doe", "age": 28}' -H "Content-Type: application/json"
+```
+
+4. **PATCH** – Kısmi güncelleme
+   Var olan bir kaynağın sadece belirli bir kısmını günceller.
+
+```bash
+curl -X PATCH https://api.example.com/users/1 -d '{"age": 29}' -H "Content-Type: application/json"
+```
+
+5. **DELETE** – Veri silme
+   Var olan bir kaynağı silmek için kullanılır.
+
+```bash
+curl -X DELETE https://api.example.com/users/1
+```
+
+### REST API Nedir?
+
+Açılımı "Representational state transfer" dır. İnternet üzerinden iletişim için kullanılan en yaygın metottur. HTTP metodlarının kullandığı sistemdir, statelesstır her istek birbirinden bağımsız çalışır.
+
+## Kaynak odaklı tasarım
+
+REST API'lerinde her şeyin bir kaynak olarak kabul edilmesidir. Kaynaklar, API'nin yönettiği verileri temsil eder ve her kaynağa benzersiz bir URI ile erişilir.
+
+## URI standartları
+URI internetteki kaynakları bulmak için kullanılır. Standart olarak düzgün okunaklı olmasını söyleyebiliriz. URL nin süpersetidir.
+
+## Stateless mimari
+
+Her HTTP isteği, önceki isteklerden bağımsızdır. Sunucu, istemciye her istekte kimlik doğrulama gibi bilgileri göndermelidir.
+
+## Best practice örnekleri
+yüklem yerine isim kullanmak örneğin
+createUser yerine user
+
+### Authentication vs Authorization
+
+## Authentication
+
+Kullanıcının kim olduğunu tanıma sürecidir
+
+## Authorization
+
+Kullanıcının hangi kaynaklara erişebileceğini belirleme sürecidir.
+
+## Farkları
+
+Farklarını anlamak için bir binada kullanılan giriş kartlarını düşünebiliriz, kartın verilme işlemi Authentication işlemine benzerken,
+o kartı kullanarak odalara girmek Authorization işlemi olacaktır. Kart kişinin kim olduğunu kanıtlayacaktır. Ayrıca bu kartın değiştirilmediğine emin olmak için kontroller yapılır
+
+### JWT nedir?
+
+Authorization için kullanılan bir yöntemdir, buradaki önemli olan nokta authorization key inin server tarafında değil
+client tarafında tutuluyor olmasıdır.
+
+## Ne işe yarar?
+
+Kullanıcının istenilen verilere erişme hakkı olup olmadığını kontrol etmek için kullanılır.
+
+## Neden Kullanılır?
+
+Mikroservislerin authenticationınını birbirine bağlamak için kullanılabilir.
+
+## Örnek
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+Jwt 3 kısımdan oluşur header, payload ve signature, bunlatı base64 ile şifreleyip "." ları kullanarak 3 parçaya ayırır bu parçalar örneğin yukarıdaki token için alttaki gibi olacaktır
+
+- **Header**: {"alg": "HS256", "typ": "JWT"}
+
+- **Payload**: {"sub": "1234567890", "name": "John Doe", "iat": 1516239022}
+
+- **Signature**: SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
