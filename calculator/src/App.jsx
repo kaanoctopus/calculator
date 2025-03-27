@@ -13,6 +13,7 @@ export default function App() {
   
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [notification, setNotification] = useState(""); //
 
   useKeyboard(user ? handleKeyPress : () => {});
 
@@ -38,10 +39,18 @@ export default function App() {
     }
   };
 
+  const handleRegister = async () => {
+    setNotification("Registration successful! You can now log in.");
+    setTimeout(() => setNotification(""), 3000);
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
     <div className="max-w-sm w-full mx-auto mt-10 p-4 rounded-3xl bg-white shadow-2xl flex flex-col gap-2">
+      {notification && (
+        <div className="bg-green-500 text-white text-center p-2 rounded-md">{notification}</div>
+      )}
       {user ? (
         <>
           <button onClick={() => { logoutUser(); setUser(null); }}>Logout</button>
@@ -52,7 +61,7 @@ export default function App() {
       ) : (
         <>
           <Login onLogin={handleLogin} />
-          <Register onRegister={handleLogin} />
+          <Register onRegister={handleRegister} />
         </>
       )}
     </div>

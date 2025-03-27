@@ -11,6 +11,10 @@ export default function Register({ onRegister }) {
     e.preventDefault();
     try {
       await registerUser(firstName, lastName, email, password);
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPassword('');
       onRegister();
     } catch (err) {
       alert(err.message);
