@@ -11,17 +11,14 @@ export function useCalculatorController() {
   const [history, setHistory] = useState([]);
   const [justCalculated, setJustCalculated] = useState(false);
 
-  useEffect(() => {
-    async function loadHistory() {
-      try {
-        const data = await fetchHistory();
-        setHistory(data.map((calc) => `${calc.expression} = ${calc.result}`));
-      } catch (err) {
-        console.error("Failed to load history:", err);
-      }
+  const loadHistory = async () => {
+    try {
+      const historyData = await fetchHistory();
+      setHistory(historyData.history.map(h => `${h.expression} = ${h.result}`));
+    } catch (error) {
+      console.error("Failed to load history:", error);
     }
-    loadHistory();
-  }, []);
+  };
 
   const isOperator = (key) => ["+", "-", "*", "/"].includes(key);
 
@@ -69,5 +66,6 @@ export function useCalculatorController() {
     history,
     handleKeyPress,
     handleClearHistory,
+    loadHistory,
   };
 }
