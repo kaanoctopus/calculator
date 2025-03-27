@@ -29,13 +29,7 @@ class AuthController {
     try {
       const { email, password } = req.body;
       const result = await this.authService.login(email, password);
-      res.header("Access-Control-Allow-Origin", "*");
-      res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-      res.header(
-        "Access-Control-Allow-Headers",
-
-        "Origin, X-Requested-With, Content-Type, Accept"
-      );
+      
       res.json(result);
     } catch (error) {
       res.status(400).json({ error: error.message });
