@@ -13,17 +13,6 @@ const app = express();
 
 app.use(cors());
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS" || req.method === "POST") {
-    return res.sendStatus(204); // Important: End the response for preflight
-  }
-
-  next();
-});
 app.use(express.json());
 
 app.options("*", cors());
