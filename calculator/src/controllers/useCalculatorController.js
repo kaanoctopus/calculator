@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   evaluateExpression,
   fetchHistory,
@@ -11,7 +11,7 @@ export function useCalculatorController() {
   const [history, setHistory] = useState([]);
   const [justCalculated, setJustCalculated] = useState(false);
 
-  const loadHistory = async () => {
+  const loadHistory = useCallback(async () => {
     try {
       const historyData = await fetchHistory();
       setHistory(
@@ -20,7 +20,7 @@ export function useCalculatorController() {
     } catch (error) {
       console.error("Failed to load history:", error);
     }
-  };
+  }, []);
 
   const isOperator = (key) => ["+", "-", "*", "/"].includes(key);
 
