@@ -14,7 +14,9 @@ export function useCalculatorController() {
   const loadHistory = async () => {
     try {
       const historyData = await fetchHistory();
-      setHistory(historyData.history.map(h => `${h.expression} = ${h.result}`));
+      setHistory(
+        historyData.history.map((h) => `${h.expression} = ${h.result}`)
+      );
     } catch (error) {
       console.error("Failed to load history:", error);
     }

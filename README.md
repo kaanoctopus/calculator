@@ -7,6 +7,7 @@
 - **Tailwind CSS**: Hızlı ve duyarlı stil vermek için.
 - **JWT (JSON Web Tokens)**: Kullanıcı kimlik doğrulama ve güvenlik için.
 - **Netlify Functions**: Backend fonksiyonları için serverless yapılar.
+- **MongoDB**: Kullanıcı verilerini tuttuğumuz veritabanı.
 
 ## Kurulum ve Kullanım
 
@@ -22,6 +23,14 @@ Bağımlılıkları kurun
 ```bash
 cd calculator && npm install
 cd ../backend && npm install
+```
+
+.env dosyasını backend klasörü içinde oluşturun
+cluster oluşturup linkini almak için https://www.mongodb.com/ ye gidiniz
+
+```
+MONGO_URI=mongodb+srv://name:password.*
+JWT_SECRET=RANDOM_SECRET_KEY
 ```
 
 Projeyi başlatın
