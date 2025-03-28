@@ -7,7 +7,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import useKeyboard from './hooks/useKeyboard';
 import ProfileModal from "./components/ProfileModal";
-import { getUser, logoutUser, updateUser, deleteUser } from './services/authService';
+import { getUser, logoutUser, deleteUser } from './services/authService';
 
 export default function App() {
   const { expression, result, history, handleKeyPress, handleClearHistory, loadHistory } = useCalculatorController();
@@ -30,7 +30,7 @@ export default function App() {
       })
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
-  }, []);
+  }, [loadHistory]);
 
   const handleUpdateUser = (updatedUser) => {
     setUser(updatedUser); 
@@ -57,17 +57,6 @@ export default function App() {
       setProfileData(profile);
     } catch (error) {
       console.error("Failed to fetch profile:", error);
-    }
-  };
-
-  const handleUpdateProfile = async () => {
-    try {
-      const updatedUser = await updateUser();
-      setUser(updatedUser);
-      setNotification("Profile updated successfully.");
-      setTimeout(() => setNotification(""), 3000);
-    } catch (error) {
-      console.error("Profile update failed:", error);
     }
   };
 

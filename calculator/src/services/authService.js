@@ -43,23 +43,23 @@ export async function getUser() {
   return data;
 }
 
-export async function updateUser(updatedData) {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("User not authenticated");
+// export async function updateUser(updatedData) {
+//   const token = localStorage.getItem("token");
+//   if (!token) throw new Error("User not authenticated");
 
-  const response = await fetch(`${API_BASE}/me`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(updatedData),
-  });
+//   const response = await fetch(`${API_BASE}/me`, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//     body: JSON.stringify(updatedData),
+//   });
 
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.error || "Failed to update user");
-  return data;
-}
+//   const data = await response.json();
+//   if (!response.ok) throw new Error(data.error || "Failed to update user");
+//   return data;
+// }
 
 export async function deleteUser() {
   const token = localStorage.getItem("token");
