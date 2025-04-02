@@ -1,4 +1,4 @@
-const API_BASE = "https://calcbackend.netlify.app/api";
+const API_BASE = "https://6hkhcefyhrrnzjd3siqho25hte0lngbi.lambda-url.eu-north-1.on.aws/api";
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");

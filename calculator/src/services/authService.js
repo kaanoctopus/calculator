@@ -1,4 +1,4 @@
-const API_BASE = "https://calcbackend.netlify.app/api/auth";
+const API_BASE = "https://6hkhcefyhrrnzjd3siqho25hte0lngbi.lambda-url.eu-north-1.on.aws/api/auth";
 
 export async function registerUser(firstName, lastName, email, password) {
   const response = await fetch(`${API_BASE}/register`, {
