@@ -16,7 +16,7 @@ router.options("*", (req, res) => {
 });
 
 router.post("/calculate", authMiddleware, calculationController.calculate);
-router.post("/save-calculation", authMiddleware, calculationController.saveCalculation);
+router.post("/save-calculation", calculationController.saveCalculation);
 router.get("/history", authMiddleware, calculationController.getHistory);
 router.delete("/history", authMiddleware, calculationController.clearHistory);
 
