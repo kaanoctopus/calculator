@@ -29,6 +29,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
       onLogin();
     } catch (err) {
       setErrorMessage(err.message);
+      console.error(err.message);
     }
     setLoading(false)
   };
@@ -52,8 +53,9 @@ export default function Login({ onLogin, onSwitchToRegister }) {
           Sign in to your account
         </h1>
 
+        
         {errorMessage && (
-          <div className="p-2 text-sm text-red-600 bg-red-100 rounded-lg">
+          <div className="p-2 text-sm text-red-600 bg-red-100 rounded-lg fade-in-out">
             {errorMessage}
           </div>
         )}

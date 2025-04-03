@@ -38,6 +38,7 @@ export default function Register({ onSwitchToLogin }) {
       setSuccessMessage('Account created successfully!');
     } catch (err) {
       setErrorMessage(err.message);
+      console.error(err.message);
     }
     setLoading(false);
   };
@@ -48,8 +49,8 @@ export default function Register({ onSwitchToLogin }) {
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
           Create an account
         </h1>
-        {errorMessage && <div className="text-red-600 bg-red-100 p-2 rounded-md">{errorMessage}</div>}
-        {successMessage && <div className="text-green-600 bg-green-100 p-2 rounded-md">{successMessage}</div>}
+        {errorMessage && <div className="text-red-600 bg-red-100 p-2 rounded-md fade-in-out">{errorMessage}</div>}
+        {successMessage && <div className="text-green-600 bg-green-100 p-2 rounded-md fade-in-out">{successMessage}</div>}
         <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm font-medium text-gray-900">First Name</label>

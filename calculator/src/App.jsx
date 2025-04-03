@@ -50,7 +50,8 @@ export default function App() {
   const handleGetProfile = async () => {
     try {
       const profile = await getUser();
-      setProfileData(profile);
+      setProfileData(profile);  
+      setTimeout(() => {window.scrollTo(0, document.body.scrollHeight);},30);
     } catch (error) {
       console.error("Failed to fetch profile:", error);
     }
