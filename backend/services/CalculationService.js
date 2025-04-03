@@ -5,7 +5,7 @@ const User = require("../models/User");
 const BACKUP_API_BASE = "https://calcbackend.netlify.app/api";
 const PRIMARY_API_BASE =
     "https://6hkhcefyhrrnzjd3siqho25hte0lngbi.lambda-url.eu-north-1.on.aws/api";
-const API_AUTH_TOKEN = process.env.INTERNAL_API_TOKEN;
+const API_AUTH_TOKEN = process.env.API_AUTH_TOKEN;
 
 class CalculationService {
     async evaluateExpression(expression, userId) {
