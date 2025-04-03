@@ -6,16 +6,23 @@ class CalculationService {
   async evaluateExpression(expression, userId) {
     try {
       const result = math.evaluate(expression).toString();
-      const calculation = new Calculation({ userId, expression, result });
-      await calculation.save();
-
-      await User.findByIdAndUpdate(userId, {
-        $push: { history: calculation._id },
-      });
+      
+      this.saveCalculationAsync(userId, expression, result)
+        .catch(err => console.error('Background save error:', err));
+      
       return { result };
     } catch (error) {
       throw new Error("Invalid Expression");
     }
+  }
+  
+  async saveCalculationAsync(userId, expression, result) {
+    const calculation = new Calculation({ userId, expression, result });
+    await calculation.save();
+    
+    await User.findByIdAndUpdate(userId, {
+      $push: { history: calculation._id },
+    }).lean();
   }
 
   async getHistory(userId) {
