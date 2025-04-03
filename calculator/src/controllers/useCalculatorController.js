@@ -24,7 +24,41 @@ export function useCalculatorController() {
 
   const isOperator = (key) => ["+", "-", "*", "/"].includes(key);
 
+  const isValidInput = (currentExpression, newKey) => {
+    const lastChar = currentExpression.slice(-1);
+    
+    // Prevent empty expression starting with operator (except '-')
+    if (!currentExpression && isOperator(newKey) && newKey !== '-') {
+      return false;
+    }
+  
+    // Prevent consecutive operators (but allow negative numbers)
+    if (isOperator(lastChar) && isOperator(newKey)) {
+      // Allow cases like '3*-4' but block '3+*4'
+      if (lastChar === '*' && newKey === '-') return true; // Allow *-
+      if (lastChar === '/' && newKey === '-') return true; // Allow /-
+      return false;
+    }
+  
+    // Prevent operator after opening parenthesis
+    if (lastChar === '(' && isOperator(newKey) && newKey !== '-') {
+      return false;
+    }
+  
+    // Prevent multiple decimals in a number
+    if (newKey === '.') {
+      const parts = currentExpression.split(/[+\-*/]/);
+      const lastNumber = parts[parts.length - 1];
+      if (lastNumber.includes('.')) return false;
+    }
+  
+    return true;
+  };
+
   const handleKeyPress = async (key) => {
+    if (key !== '=' && key !== 'c' && key !== 'C' && !isValidInput(expression, key)) {
+      return;
+    }
     if (key === "=") {
       try {
         const res = await evaluateExpression(expression);
