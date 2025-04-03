@@ -12,6 +12,30 @@ export async function registerUser(firstName, lastName, email, password) {
   return data;
 }
 
+export async function forgotPassword(email) {
+  const response = await fetch(`${API_BASE}/forgot-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || "Failed to send reset email");
+  return data;
+}
+
+export async function resetPassword(token, newPassword) {
+  const response = await fetch(`${API_BASE}/reset-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token, newPassword }),
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || "Password reset failed");
+  return data;
+}
+
 export async function loginUser(email, password) {
   const response = await fetch(`${API_BASE}/login`, {
     method: "POST",

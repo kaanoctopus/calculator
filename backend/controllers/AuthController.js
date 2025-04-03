@@ -7,7 +7,29 @@ class AuthController {
     this.getMe = this.getMe.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
     this.deleteAccount = this.deleteAccount.bind(this);
+    this.forgotPassword = this.forgotPassword.bind(this);
+    this.resetPassword = this.resetPassword.bind(this);
     this.logout = this.logout.bind(this);
+  }
+
+  async forgotPassword(req, res) {
+    try {
+      const { email } = req.body;
+      const result = await this.authService.forgotPassword(email);
+      res.json(result);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  async resetPassword(req, res) {
+    try {
+      const { token, newPassword } = req.body;
+      const result = await this.authService.resetPassword(token, newPassword);
+      res.json(result);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   }
 
   async register(req, res) {
