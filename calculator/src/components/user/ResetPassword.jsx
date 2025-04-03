@@ -77,7 +77,7 @@ export default function ResetPassword({ token, onSuccess }) {
             type="submit"
             disabled={loading}
             className={`w-full py-2 px-4 rounded-md text-white ${
-              loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+              loading ? "bg-gray-400" : "bg-green-400 hover:bg-green-500"
             }`}
           >
             {loading ? "Processing..." : "Reset Password"}
