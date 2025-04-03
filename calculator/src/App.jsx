@@ -3,8 +3,7 @@ import { useCalculatorController } from './controllers/useCalculatorController';
 import Display from './components/Display';
 import Keypad from './components/Keypad';
 import History from './components/History';
-// import Login from './components/user/Login';
-// import Register from './components/user/Register';
+import ResetPassword from "./components/user/ResetPassword";
 import AuthPage from './components/user/AuthPage';
 import useKeyboard from './hooks/useKeyboard';
 import ProfileModal from "./components/ProfileModal";
@@ -18,10 +17,19 @@ export default function App() {
   const [notification, setNotification] = useState("");
   const [profileData, setProfileData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
+  const [resetToken, setResetToken] = useState(null);
 
   useKeyboard(user ? handleKeyPress : () => {});
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    
+    if (token) {
+      setResetToken(token);
+      setShowResetPassword(true);
+    }
     getUser()
       .then((loggedInUser) => {
         setUser(loggedInUser);
@@ -69,6 +77,20 @@ export default function App() {
   };
 
   if (loading) return <div>Loading...</div>;
+
+  if (showResetPassword) {
+    return (
+      <div className="max-w-sm w-full mx-auto mt-10 p-4 rounded-3xl bg-white shadow-2xl">
+        <ResetPassword 
+          token={resetToken} 
+          onSuccess={() => {
+            window.history.replaceState({}, document.title, window.location.pathname);
+            setShowResetPassword(false);
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-sm w-full mx-auto mt-10 p-4 rounded-3xl bg-white shadow-2xl flex flex-col gap-2">
