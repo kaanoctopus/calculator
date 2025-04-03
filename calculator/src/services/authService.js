@@ -1,50 +1,40 @@
-const API_BASE = "https://6hkhcefyhrrnzjd3siqho25hte0lngbi.lambda-url.eu-north-1.on.aws/api/auth";
+import { fetchWithFallback } from '../utility/apiClient';
 
 export async function registerUser(firstName, lastName, email, password) {
-  const response = await fetch(`${API_BASE}/register`, {
+  return await fetchWithFallback('/register', {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ firstName, lastName, email, password }),
-  });
-
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.error || "Registration failed");
-  return data;
+  }, true);
 }
 
 export async function forgotPassword(email) {
-  const response = await fetch(`${API_BASE}/forgot-password`, {
+  return await fetchWithFallback('/forgot-password', {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email }),
-  });
-
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.error || "Failed to send reset email");
-  return data;
+  }, true);
 }
 
 export async function resetPassword(token, newPassword) {
-  const response = await fetch(`${API_BASE}/reset-password`, {
+  return await fetchWithFallback('/reset-password', {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ token, newPassword }),
-  });
-
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.error || "Password reset failed");
-  return data;
+  }, true);
 }
 
 export async function loginUser(email, password) {
-  const response = await fetch(`${API_BASE}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
-
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.error || "Login failed");
+  const data = await fetchWithFallback(
+    '/login',
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    },
+    true // This is an auth endpoint
+  );
+  
   localStorage.setItem("token", data.token);
   return data.token;
 }
@@ -57,44 +47,46 @@ export async function getUser() {
   const token = localStorage.getItem("token");
   if (!token) return null;
 
-  const response = await fetch(`${API_BASE}/me`, {
-    method: "GET",
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.error || "Failed to fetch user");
-  return data;
+  return await fetchWithFallback(
+    '/me',
+    {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    },
+    true
+  );
 }
 
 export async function updateUser(updatedData) {
   const token = localStorage.getItem("token");
   if (!token) throw new Error("User not authenticated");
 
-  const response = await fetch(`${API_BASE}/me`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+  return await fetchWithFallback(
+    '/me',
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(updatedData),
     },
-    body: JSON.stringify(updatedData),
-  });
-
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.error || "Failed to update user");
-  return data;
+    true
+  );
 }
 
 export async function deleteUser() {
   const token = localStorage.getItem("token");
   if (!token) throw new Error("User not authenticated");
 
-  const response = await fetch(`${API_BASE}/me`, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  if (!response.ok) throw new Error("Failed to delete user");
+  await fetchWithFallback(
+    '/me',
+    {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    },
+    true
+  );
 
   logoutUser();
 }
