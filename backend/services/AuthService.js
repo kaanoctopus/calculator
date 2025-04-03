@@ -25,7 +25,7 @@ class AuthService {
         user.resetPasswordExpires = resetPasswordExpires;
         await user.save();
     
-        const resetUrl = `https://calculatoroctopus.netlify.app/reset-password?token=${resetToken}`;
+        const resetUrl = `https://calculatoroctopus.netlify.app/?token=${resetToken}`;
         
         const mailOptions = {
           to: user.email,
