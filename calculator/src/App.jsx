@@ -3,8 +3,9 @@ import { useCalculatorController } from './controllers/useCalculatorController';
 import Display from './components/Display';
 import Keypad from './components/Keypad';
 import History from './components/History';
-import Login from './components/Login';
-import Register from './components/Register';
+// import Login from './components/user/Login';
+// import Register from './components/user/Register';
+import AuthPage from './components/user/AuthPage';
 import useKeyboard from './hooks/useKeyboard';
 import ProfileModal from "./components/ProfileModal";
 import { getUser, logoutUser, deleteUser } from './services/authService';
@@ -44,11 +45,6 @@ export default function App() {
     } catch (error) {
       console.error("Login failed:", error);
     }
-  };
-
-  const handleRegister = async () => {
-    setNotification("Registration successful! You can now log in.");
-    setTimeout(() => setNotification(""), 3000);
   };
 
   const handleGetProfile = async () => {
@@ -103,8 +99,7 @@ export default function App() {
         </>
       ) : (
         <>
-          <Login onLogin={handleLogin} />
-          <Register onRegister={handleRegister} />
+          <AuthPage onLogin={handleLogin}/>
         </>
       )}
       
