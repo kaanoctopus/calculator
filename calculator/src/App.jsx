@@ -61,7 +61,7 @@ export default function App() {
 
     const handleUpdateUser = async () => {
         const profile = await getUser();
-        setUser(profile)
+        setUser(profile);
         setProfileData(profile);
     };
 
@@ -87,10 +87,10 @@ export default function App() {
     const handleDeleteAccount = async () => {
         const confirmDelete = window.confirm(
             "⚠️ Are you sure you want to permanently delete your account?\n\n" +
-            "This will erase all your data and cannot be undone."
-          );
-          
-          if (!confirmDelete) return;
+                "This will erase all your data and cannot be undone."
+        );
+
+        if (!confirmDelete) return;
         try {
             await deleteUser();
             logoutUser();
@@ -157,14 +157,16 @@ export default function App() {
                         </motion.div>
                     </div>
 
-                    <div className="shadow-md bg-white rounded-xl lg:col-span-1 flex justify-center items-start h-full p-4">
+                    <div className="shadow-md bg-white rounded-xl lg:col-span-1 flex justify-center items-start h-full p-4" id="calculator">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.3, delay: 0.1 }}
                             className="w-full max-w-sm rounded-3xl flex flex-col h-full"
                         >
-                            <h3 className="text-lg font-semibold mb-3 pb-2 border-b">Calculator</h3>
+                            <h3 className="text-lg font-semibold mb-3 pb-2 border-b">
+                                Calculator
+                            </h3>
                             <Display value={result || expression} />
                             <Keypad onKeyPress={handleKeyPress} />
                         </motion.div>

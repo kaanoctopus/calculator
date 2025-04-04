@@ -1,13 +1,30 @@
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-
 export default function History({ items, onClear }) {
+    const [height, setHeight] = useState("500px");
+
+    useEffect(() => {
+        const updateHeight = () => {
+            const calculator = document.querySelector("#calculator");
+            if (calculator) {
+                setHeight(`${calculator.clientHeight}px`);
+            }
+        };
+
+        updateHeight();
+
+        window.addEventListener("resize", updateHeight);
+        return () => window.removeEventListener("resize", updateHeight);
+    }, []);
+
     return (
         <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="p-4 bg-white rounded-xl shadow-md h-full flex flex-col max-h-[508px]"
+            className="p-4 bg-white rounded-xl shadow-md flex flex-col"
+            style={{ height }}
         >
             <div className="flex justify-between items-center mb-3 border-b pb-2">
                 <h3 className="text-lg font-semibold">History</h3>
