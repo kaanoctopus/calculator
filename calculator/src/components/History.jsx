@@ -1,15 +1,16 @@
 import { motion, AnimatePresence } from "framer-motion";
 
+
 export default function History({ items, onClear }) {
     return (
         <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="p-4 bg-white rounded-xl shadow-md mb-4"
+            className="p-4 bg-white rounded-xl shadow-md h-full flex flex-col max-h-[508px]"
         >
             <div className="flex justify-between items-center mb-3 border-b pb-2">
-                <h3 className="text-lg font-semibold text-gray-800">History</h3>
+                <h3 className="text-lg font-semibold">History</h3>
                 {items.length > 0 && (
                     <motion.button
                         onClick={onClear}
@@ -22,7 +23,7 @@ export default function History({ items, onClear }) {
                 )}
             </div>
 
-            <div className="h-40 overflow-y-auto pr-2">
+            <div className="flex-1 overflow-y-auto pr-2">
                 <AnimatePresence>
                     {items.length === 0 ? (
                         <motion.p
@@ -43,7 +44,7 @@ export default function History({ items, onClear }) {
                                         duration: 0.3,
                                         delay: index * 0.05,
                                     }}
-                                    className="px-3 py-2 bg-gray-50 rounded-lg text-gray-700 font-mono text-sm"
+                                    className="px-3 py-2 bg-gray-50 rounded-lg text-gray-700 font-mono text-sm truncate"
                                 >
                                     {item}
                                 </motion.li>

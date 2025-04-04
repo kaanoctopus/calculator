@@ -37,13 +37,13 @@ export default function Keypad({ onKeyPress }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="grid grid-cols-4 gap-2 p-4 bg-gray-100 rounded-b-2xl"
+            className="grid grid-cols-4 gap-2 p-4 bg-gray-300 rounded-b-2xl shadow-md"
         >
             {keys.map((key) => (
                 <motion.button
                     key={key.value}
                     whileTap={{ scale: 0.9 }}
-                    className={`p-4 rounded-xl shadow hover:bg-opacity-80 text-xl font-medium ${
+                    className={`p-4 rounded-xl shadow hover:bg-opacity-50 text-xl font-medium ${
                         key.color
                     } ${key.className || ""}`}
                     onClick={() => onKeyPress(key.value)}

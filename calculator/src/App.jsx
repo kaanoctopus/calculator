@@ -142,8 +142,8 @@ export default function App() {
             </AnimatePresence>
 
             {user ? (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-                    <div className="lg:col-span-1">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center h">
+                    <div className="lg:col-span-1 h-full">
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -157,19 +157,20 @@ export default function App() {
                         </motion.div>
                     </div>
 
-                    <div className="lg:col-span-1 flex justify-center items-start">
+                    <div className="shadow-md bg-white rounded-xl lg:col-span-1 flex justify-center items-start h-full p-4">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.3, delay: 0.1 }}
-                            className="w-full max-w-sm rounded-3xl shadow-2xl flex flex-col h-[400px]"
+                            className="w-full max-w-sm rounded-3xl flex flex-col h-full"
                         >
+                            <h3 className="text-lg font-semibold mb-3 pb-2 border-b">Calculator</h3>
                             <Display value={result || expression} />
                             <Keypad onKeyPress={handleKeyPress} />
                         </motion.div>
                     </div>
 
-                    <div className="lg:col-span-1">
+                    <div className="lg:col-span-1 h-full">
                         <UserProfile
                             profileData={profileData}
                             onGetProfile={handleGetProfile}
