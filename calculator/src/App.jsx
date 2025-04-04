@@ -5,6 +5,7 @@ import Display from "./components/Display";
 import Keypad from "./components/Keypad";
 import History from "./components/History";
 import ResetPassword from "./components/user/ResetPassword";
+import UserProfile from "./components/user/UserProfile";
 import AuthPage from "./components/user/AuthPage";
 import useKeyboard from "./hooks/useKeyboard";
 import ProfileModal from "./components/ProfileModal";
@@ -136,7 +137,7 @@ export default function App() {
 
             {user ? (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div className="lg:col-span-1">
+                    <div className="lg:col-span-1 overflow-y-auto">
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -150,11 +151,12 @@ export default function App() {
                         </motion.div>
                     </div>
 
-                    <div className="lg:col-span-1 max-w-sm w-full mx-auto rounded-3xl shadow-2xl flex flex-col">
+                    <div className="lg:col-span-1 flex justify-center items-start">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.3, delay: 0.1 }}
+                            className="w-full max-w-sm rounded-3xl shadow-2xl flex flex-col h-[400px]"
                         >
                             <Display value={result || expression} />
                             <Keypad onKeyPress={handleKeyPress} />
@@ -162,89 +164,16 @@ export default function App() {
                     </div>
 
                     <div className="lg:col-span-1">
-                        <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3, delay: 0.2 }}
-                            className="p-4 bg-gray-50 rounded-xl shadow-sm"
-                        >
-                            <h2 className="text-xl font-bold mb-4">
-                                User Profile
-                            </h2>
-
-                            <div className="space-y-3 mb-4">
-                                <motion.button
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="w-full p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
-                                    onClick={handleGetProfile}
-                                >
-                                    Get Profile
-                                </motion.button>
-
-                                <motion.button
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="w-full p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors"
-                                    onClick={() => setIsModalOpen(true)}
-                                >
-                                    Update Profile
-                                </motion.button>
-
-                                <motion.button
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="w-full p-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
-                                    onClick={() => {
-                                        logoutUser();
-                                        setUser(null);
-                                    }}
-                                >
-                                    Logout
-                                </motion.button>
-
-                                <motion.button
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="w-full p-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg transition-colors"
-                                    onClick={handleDeleteAccount}
-                                >
-                                    Delete Account
-                                </motion.button>
-                            </div>
-
-                            {profileData && (
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    className="p-4 bg-white rounded-lg border border-gray-200"
-                                >
-                                    <h3 className="font-semibold mb-2">
-                                        Profile Details
-                                    </h3>
-                                    <div className="space-y-2">
-                                        <p>
-                                            <span className="font-medium">
-                                                Name:
-                                            </span>{" "}
-                                            {profileData.firstName}
-                                        </p>
-                                        <p>
-                                            <span className="font-medium">
-                                                Surname:
-                                            </span>{" "}
-                                            {profileData.lastName}
-                                        </p>
-                                        <p>
-                                            <span className="font-medium">
-                                                Email:
-                                            </span>{" "}
-                                            {profileData.email}
-                                        </p>
-                                    </div>
-                                </motion.div>
-                            )}
-                        </motion.div>
+                        <UserProfile
+                            profileData={profileData}
+                            onGetProfile={handleGetProfile}
+                            onUpdateProfile={() => setIsModalOpen(true)}
+                            onLogout={() => {
+                                logoutUser();
+                                setUser(null);
+                            }}
+                            onDeleteAccount={handleDeleteAccount}
+                        />
                     </div>
                 </div>
             ) : (
