@@ -59,9 +59,9 @@ export default function App() {
             .finally(() => setLoading(false));
     }, [loadHistory]);
 
-    const handleUpdateUser = async (updatedUser) => {
-        setUser(updatedUser);
+    const handleUpdateUser = async () => {
         const profile = await getUser();
+        setUser(profile)
         setProfileData(profile);
     };
 
