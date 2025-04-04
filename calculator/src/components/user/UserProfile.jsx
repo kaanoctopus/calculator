@@ -14,7 +14,7 @@ export default function UserProfile({
             transition={{ duration: 0.3, delay: 0.2 }}
             className="p-4 bg-gray-50 rounded-xl shadow-sm"
         >
-            <h2 className="text-xl font-bold mb-4">User Profile</h2>
+            <h2 className="text-lg font-semibold mb-4">User Profile</h2>
 
             <div className="space-y-3 mb-4">
                 <motion.button
@@ -58,6 +58,7 @@ export default function UserProfile({
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
                     className="p-4 bg-white rounded-lg border border-gray-200"
                 >
                     <h3 className="font-semibold mb-2">Profile Details</h3>

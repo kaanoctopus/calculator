@@ -85,6 +85,12 @@ export default function App() {
     };
 
     const handleDeleteAccount = async () => {
+        const confirmDelete = window.confirm(
+            "⚠️ Are you sure you want to permanently delete your account?\n\n" +
+            "This will erase all your data and cannot be undone."
+          );
+          
+          if (!confirmDelete) return;
         try {
             await deleteUser();
             logoutUser();
@@ -136,8 +142,8 @@ export default function App() {
             </AnimatePresence>
 
             {user ? (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div className="lg:col-span-1 overflow-y-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                    <div className="lg:col-span-1">
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}

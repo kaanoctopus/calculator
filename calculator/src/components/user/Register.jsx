@@ -114,13 +114,13 @@ export default function Register({ onSwitchToLogin }) {
                 </h1>
 
                 {errors.general && (
-                    <div className="text-red-600 bg-red-100 p-2 rounded-md">
+                    <div className="m-auto w-40 text-red-600 bg-red-100 p-2 rounded-md">
                         {errors.general}
                     </div>
                 )}
 
                 {successMessage && (
-                    <div className="text-green-600 bg-green-100 p-2 rounded-md">
+                    <div className="m-auto w-40 text-green-600 bg-green-100 p-2 rounded-md">
                         {successMessage}
                     </div>
                 )}
