@@ -22,7 +22,7 @@ export function useCalculatorController() {
         }
     }, []);
 
-    const isOperator = (key) => ["+", "-", "*", "/"].includes(key);
+    const isOperator = (key) => ["+", "-", "*", "/", "="].includes(key);
 
     const isValidInput = (currentExpression, newKey) => {
         const lastChar = currentExpression.slice(-1);
@@ -30,6 +30,19 @@ export function useCalculatorController() {
 
         if (!currentExpression && isOperator(newKey) && newKey !== "-") {
             return false;
+        }
+
+        if (newKey === ")") {
+            const openCount = (currentExpression.match(/\(/g) || []).length;
+            const closeCount = (currentExpression.match(/\)/g) || []).length;
+
+            if (openCount <= closeCount) return false;
+
+            if (isOperator(lastChar)) return false;
+
+            if (lastChar === "(") return false;
+
+            return true;
         }
 
         if (isOperator(lastChar) && isOperator(newKey)) {
@@ -52,12 +65,7 @@ export function useCalculatorController() {
     };
 
     const handleKeyPress = async (key) => {
-        if (
-            key !== "=" &&
-            key !== "c" &&
-            key !== "C" &&
-            !isValidInput(expression, key)
-        ) {
+        if (key !== "c" && key !== "C" && !isValidInput(expression, key)) {
             return;
         }
         if (key === "=") {
@@ -75,7 +83,6 @@ export function useCalculatorController() {
             setResult("");
             setExpression("");
         } else {
-            console.log(justCalculated);
             if (justCalculated) {
                 if (isOperator(key)) {
                     setExpression(result + key);

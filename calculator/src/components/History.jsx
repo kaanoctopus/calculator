@@ -40,7 +40,7 @@ export default function History({ items, onClear }) {
                                     initial={{ opacity: 0, x: -10 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{
-                                        duration: 0.2,
+                                        duration: 0.3,
                                         delay: index * 0.05,
                                     }}
                                     className="px-3 py-2 bg-gray-50 rounded-lg text-gray-700 font-mono text-sm"
