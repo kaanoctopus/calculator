@@ -1,27 +1,54 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function History({ items, onClear }) {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      className="p-2 text-sm text-gray-600 h-32 overflow-y-auto bg-white shadow-inner rounded-xl mb-2"
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className="p-4 bg-white rounded-xl shadow-md mb-4"
     >
-      <div className="flex justify-between items-center mb-1">
-        <h3 className="font-bold">History</h3>
-        <button
-          onClick={onClear}
-          className="text-xs text-red-500 hover:text-red-700"
-        >
-          Clear
-        </button>
+      <div className="flex justify-between items-center mb-3 border-b pb-2">
+        <h3 className="text-lg font-semibold text-gray-800">History</h3>
+        {items.length > 0 && (
+          <motion.button
+            onClick={onClear}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-3 py-1 text-xs font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition-colors"
+          >
+            Clear All
+          </motion.button>
+        )}
       </div>
-      {items.length === 0 ? (
-        <p>No history yet.</p>
-      ) : (
-        items.map((item, index) => <p key={index}>{item}</p>)
-      )}
+
+      <div className="h-40 overflow-y-auto pr-2">
+        <AnimatePresence>
+          {items.length === 0 ? (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.6 }}
+              className="text-center text-gray-400 italic pt-8"
+            >
+              Your calculations will appear here
+            </motion.p>
+          ) : (
+            <ul className="space-y-2">
+              {items.map((item, index) => (
+                <motion.li
+                  key={items.length - index - 1}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2, delay: index * 0.05 }}
+                  className="px-3 py-2 bg-gray-50 rounded-lg text-gray-700 font-mono text-sm"
+                >
+                  {item}
+                </motion.li>
+              ))}
+            </ul>
+          )}
+        </AnimatePresence>
+      </div>
     </motion.div>
   );
 }

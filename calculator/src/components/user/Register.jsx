@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { registerUser } from "../../services/authService";
 
+const INPUTBOX_CSS = "w-full p-2 mt-1 border rounded-lg focus:ring-primary-600 focus:border-primary-600"
+
 export default function Register({ onSwitchToLogin }) {
     const [formData, setFormData] = useState({
         firstName: "",
@@ -93,7 +95,6 @@ export default function Register({ onSwitchToLogin }) {
                 "Account created successfully! Redirecting to login..."
             );
         } catch (err) {
-            // Handle specific backend errors
             if (err.message.includes("already exists")) {
                 setErrors({ email: "Email is already registered" });
             } else {
@@ -105,7 +106,7 @@ export default function Register({ onSwitchToLogin }) {
     };
 
     return (
-        <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0">
+        <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0 rounded-3xl">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                     Create an account
@@ -124,7 +125,7 @@ export default function Register({ onSwitchToLogin }) {
                 )}
 
                 <form
-                    className="space-y-4 md:space-y-6"
+                    className="space-y-3 md:space-y-4"
                     onSubmit={handleSubmit}
                     noValidate
                 >
@@ -143,7 +144,7 @@ export default function Register({ onSwitchToLogin }) {
                             value={formData.firstName}
                             placeholder="John"
                             onChange={handleChange}
-                            className={`w-full p-3 mt-1 border rounded-lg focus:ring-primary-600 focus:border-primary-600 ${
+                            className={`${INPUTBOX_CSS} ${
                                 errors.firstName
                                     ? "border-red-500"
                                     : "border-gray-300"
@@ -166,7 +167,7 @@ export default function Register({ onSwitchToLogin }) {
                             value={formData.lastName}
                             placeholder="Doe"
                             onChange={handleChange}
-                            className={`w-full p-3 mt-1 border rounded-lg focus:ring-primary-600 focus:border-primary-600 ${
+                            className={`${INPUTBOX_CSS} ${
                                 errors.lastName
                                     ? "border-red-500"
                                     : "border-gray-300"
@@ -189,7 +190,7 @@ export default function Register({ onSwitchToLogin }) {
                             value={formData.email}
                             placeholder="name@company.com"
                             onChange={handleChange}
-                            className={`w-full p-3 mt-1 border rounded-lg focus:ring-primary-600 focus:border-primary-600 ${
+                            className={`${INPUTBOX_CSS} ${
                                 errors.email
                                     ? "border-red-500"
                                     : "border-gray-300"
@@ -212,7 +213,7 @@ export default function Register({ onSwitchToLogin }) {
                             value={formData.password}
                             placeholder="••••••••"
                             onChange={handleChange}
-                            className={`w-full p-3 mt-1 border rounded-lg focus:ring-primary-600 focus:border-primary-600 ${
+                            className={`${INPUTBOX_CSS} ${
                                 errors.password
                                     ? "border-red-500"
                                     : "border-gray-300"
@@ -235,7 +236,7 @@ export default function Register({ onSwitchToLogin }) {
                             value={formData.confirmPassword}
                             placeholder="••••••••"
                             onChange={handleChange}
-                            className={`w-full p-3 mt-1 border rounded-lg focus:ring-primary-600 focus:border-primary-600 ${
+                            className={`${INPUTBOX_CSS} ${
                                 errors.confirmPassword
                                     ? "border-red-500"
                                     : "border-gray-300"
@@ -253,11 +254,11 @@ export default function Register({ onSwitchToLogin }) {
                         }`}
                     >
                         {loading ? (
-                            <div className="text-center">
+                            <div className="flex justify-center items-center h-5">
                                 <div role="status">
                                     <svg
                                         aria-hidden="true"
-                                        className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-green-400"
+                                        className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-green-400"
                                         viewBox="0 0 100 101"
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"

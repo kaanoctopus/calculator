@@ -1,33 +1,56 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+
+const NUMBER_COLOR = "bg-white";
+const OPERATOR_COLOR = "bg-gray-200";
+const RESET_COLOR = "bg-red-500 text-white";
+const RESULT_COLOR = "bg-blue-500 text-white";
 
 export default function Keypad({ onKeyPress }) {
     const keys = [
-      '0', '1', '2',
-      '3', '4', '5',
-      '6', '7', '8',
-      '9', '/', '*',
-      '-', '+', '.',
-      '(', ')', '=', 'c'
+        { value: "c", color: RESET_COLOR },
+        { value: "(", color: OPERATOR_COLOR },
+        { value: ")", color: OPERATOR_COLOR },
+        { value: "/", color: OPERATOR_COLOR },
+        { value: "7", color: NUMBER_COLOR },
+        { value: "8", color: NUMBER_COLOR },
+        { value: "9", color: NUMBER_COLOR },
+        { value: "*", color: OPERATOR_COLOR },
+        { value: "4", color: NUMBER_COLOR },
+        { value: "5", color: NUMBER_COLOR },
+        { value: "6", color: NUMBER_COLOR },
+        { value: "-", color: OPERATOR_COLOR },
+        { value: "1", color: NUMBER_COLOR },
+        { value: "2", color: NUMBER_COLOR },
+        { value: "3", color: NUMBER_COLOR },
+        {
+            value: "+",
+            color: OPERATOR_COLOR,
+            className: "row-span-2",
+        },
+        { value: "0", color: NUMBER_COLOR },
+        { value: ".", color: NUMBER_COLOR },
+        { value: "=", color: RESULT_COLOR },
     ];
-  
+
     return (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="grid grid-cols-5 gap-2 p-4 bg-gray-100 rounded-b-2xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="grid grid-cols-4 gap-2 p-4 bg-gray-100 rounded-b-2xl"
         >
-          {keys.map((key) => (
-            <motion.button
-              key={key}
-              whileTap={{ scale: 0.9 }}
-              className="bg-white p-4 rounded-xl shadow hover:bg-gray-200 text-xl font-medium"
-              onClick={() => onKeyPress(key)}
-            >
-              {key}
-            </motion.button>
-          ))}
+            {keys.map((key) => (
+                <motion.button
+                    key={key.value}
+                    whileTap={{ scale: 0.9 }}
+                    className={`p-4 rounded-xl shadow hover:bg-opacity-80 text-xl font-medium ${
+                        key.color
+                    } ${key.className || ""}`}
+                    onClick={() => onKeyPress(key.value)}
+                >
+                    {key.value}
+                </motion.button>
+            ))}
         </motion.div>
-      );
-    
-  }
+    );
+}

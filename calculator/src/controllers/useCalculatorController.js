@@ -26,26 +26,22 @@ export function useCalculatorController() {
 
   const isValidInput = (currentExpression, newKey) => {
     const lastChar = currentExpression.slice(-1);
+    if (!lastChar) return true;
     
-    // Prevent empty expression starting with operator (except '-')
     if (!currentExpression && isOperator(newKey) && newKey !== '-') {
       return false;
     }
   
-    // Prevent consecutive operators (but allow negative numbers)
     if (isOperator(lastChar) && isOperator(newKey)) {
-      // Allow cases like '3*-4' but block '3+*4'
-      if (lastChar === '*' && newKey === '-') return true; // Allow *-
-      if (lastChar === '/' && newKey === '-') return true; // Allow /-
+      if (lastChar === '*' && newKey === '-') return true;
+      if (lastChar === '/' && newKey === '-') return true;
       return false;
     }
   
-    // Prevent operator after opening parenthesis
     if (lastChar === '(' && isOperator(newKey) && newKey !== '-') {
       return false;
     }
   
-    // Prevent multiple decimals in a number
     if (newKey === '.') {
       const parts = currentExpression.split(/[+\-*/]/);
       const lastNumber = parts[parts.length - 1];
@@ -68,11 +64,13 @@ export function useCalculatorController() {
         setJustCalculated(true);
       } catch (err) {
         setResult("Error");
+      setExpression("");
       }
     } else if (key === "c" || key === "C") {
       setResult("");
       setExpression("");
     } else {
+      console.log(justCalculated)
       if (justCalculated) {
         if (isOperator(key)) {
           setExpression(result + key);
@@ -83,6 +81,8 @@ export function useCalculatorController() {
         setJustCalculated(false);
       } else {
         setExpression((prev) => prev + key);
+      setResult("");
+
       }
     }
   };
