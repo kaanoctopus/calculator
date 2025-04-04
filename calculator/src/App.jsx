@@ -186,7 +186,7 @@ export default function App() {
                     </div>
                 </div>
             ) : (
-                <div className="max-w-md mx-auto">
+                <div className="max-w-md mx-auto shadow-md rounded-3xl">
                     <AuthPage onLogin={handleLogin} />
                 </div>
             )}
