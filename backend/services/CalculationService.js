@@ -36,7 +36,7 @@ class CalculationService {
                         headers: {
                             "Content-Type": "application/json",
                             Authorization:
-                                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYWxjdWxhdGlvbi1zZXJ2aWNlIiwic3ViIjoiaW50ZXJuYWwiLCJyb2xlIjoic2VydmljZSIsImlhdCI6MTc0MzY4NTEzOSwiZXhwIjoxNzc1MjIxMTM5fQ.2abXZR3Qsi30YZXPbfKBL6mZsBtd-qxm78m7jdnGjGU",
+                                `Bearer ${process.env.AUTH_KEY}`,
                         },
                         body: JSON.stringify({ userId, expression, result }),
                     }
