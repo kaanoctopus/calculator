@@ -35,8 +35,7 @@ class CalculationService {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization:
-                                `Bearer ${process.env.AUTH_KEY}`,
+                            Authorization: `Bearer ${process.env.AUTH_KEY}`,
                         },
                         body: JSON.stringify({ userId, expression, result }),
                     }

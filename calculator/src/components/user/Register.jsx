@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { registerUser } from "../../services/authService";
 
-const INPUTBOX_CSS = "w-full p-2 mt-1 border rounded-lg focus:ring-primary-600 focus:border-primary-600"
+const INPUTBOX_CSS =
+    "w-full p-2 mt-1 border rounded-lg focus:ring-primary-600 focus:border-primary-600";
 
 export default function Register({ onSwitchToLogin }) {
     const [formData, setFormData] = useState({

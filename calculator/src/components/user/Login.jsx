@@ -22,22 +22,6 @@ export default function Login({ onLogin, onSwitchToRegister }) {
         }
     }, [errorMessage]);
 
-    // useEffect(() => {
-    //   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    //     setErrors(prev => ({ ...prev, email: 'Please enter a valid email address' }));
-    //   } else {
-    //     setErrors(prev => ({ ...prev, email: '' }));
-    //   }
-    // }, [email]);
-
-    // useEffect(() => {
-    //   if (!password) {
-    //     setErrors(prev => ({ ...prev, password: 'Password is required' }));
-    //   } else {
-    //     setErrors(prev => ({ ...prev, password: '' }));
-    //   }
-    // }, [password]);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrorMessage(null);
@@ -226,14 +210,14 @@ export default function Login({ onLogin, onSwitchToRegister }) {
                     </button>
                 </form>
                 <div className="text-sm text-center">
-                        <span>Don't have an account? </span>
-                        <button
-                            onClick={onSwitchToRegister}
-                            className="font-medium text-green-400 hover:underline"
-                        >
-                            Create an account
-                        </button>
-                    </div>
+                    <span>Don't have an account? </span>
+                    <button
+                        onClick={onSwitchToRegister}
+                        className="font-medium text-green-400 hover:underline"
+                    >
+                        Create an account
+                    </button>
+                </div>
             </div>
 
             {/* Forgot Password Modal */}
