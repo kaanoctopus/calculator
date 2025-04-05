@@ -155,6 +155,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
                             type="password"
                             id="password"
                             name="password"
+                            autoComplete="off"
                             className={`bg-gray-50 border ${
                                 errors.password
                                     ? "border-red-500"

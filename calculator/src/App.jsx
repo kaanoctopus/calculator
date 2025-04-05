@@ -11,6 +11,58 @@ import useKeyboard from "./hooks/useKeyboard";
 import ProfileModal from "./components/ProfileModal";
 import { getUser, logoutUser, deleteUser } from "./services/authService";
 
+function CalculatorInterface({
+    history,
+    result,
+    expression,
+    handleKeyPress,
+    handleClearHistory,
+    onLogout,
+    profileData,
+    onGetProfile,
+    onDeleteAccount,
+    onUpdateProfile,
+}) {
+    return (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center h">
+            <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3 }}
+                className="h-full lg:col-span-1"
+            >
+                <History items={history} onClear={handleClearHistory} />
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+                className="shadow-md bg-white rounded-xl lg:col-span-1 flex justify-center items-start h-full p-4"
+                id="calculator"
+            >
+                <div className="w-full max-w-sm rounded-3xl flex flex-col h-full">
+                    <h3 className="text-lg font-semibold mb-3 pb-2 border-b">
+                        Calculator
+                    </h3>
+                    <Display value={result || expression} />
+                    <Keypad onKeyPress={handleKeyPress} />
+                </div>
+            </motion.div>
+
+            <div className="lg:col-span-1 h-full">
+                <UserProfile
+                    profileData={profileData}
+                    onGetProfile={onGetProfile}
+                    onUpdateProfile={onUpdateProfile}
+                    onLogout={onLogout}
+                    onDeleteAccount={onDeleteAccount}
+                />
+            </div>
+        </div>
+    );
+}
+
 export default function App() {
     const {
         expression,
@@ -142,49 +194,21 @@ export default function App() {
             </AnimatePresence>
 
             {user ? (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center h">
-                    <div className="lg:col-span-1 h-full">
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="h-full"
-                        >
-                            <History
-                                items={history}
-                                onClear={handleClearHistory}
-                            />
-                        </motion.div>
-                    </div>
-
-                    <div className="shadow-md bg-white rounded-xl lg:col-span-1 flex justify-center items-start h-full p-4" id="calculator">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.3, delay: 0.1 }}
-                            className="w-full max-w-sm rounded-3xl flex flex-col h-full"
-                        >
-                            <h3 className="text-lg font-semibold mb-3 pb-2 border-b">
-                                Calculator
-                            </h3>
-                            <Display value={result || expression} />
-                            <Keypad onKeyPress={handleKeyPress} />
-                        </motion.div>
-                    </div>
-
-                    <div className="lg:col-span-1 h-full">
-                        <UserProfile
-                            profileData={profileData}
-                            onGetProfile={handleGetProfile}
-                            onUpdateProfile={() => setIsModalOpen(true)}
-                            onLogout={() => {
-                                logoutUser();
-                                setUser(null);
-                            }}
-                            onDeleteAccount={handleDeleteAccount}
-                        />
-                    </div>
-                </div>
+                <CalculatorInterface
+                    history={history}
+                    result={result}
+                    expression={expression}
+                    handleKeyPress={handleKeyPress}
+                    handleClearHistory={handleClearHistory}
+                    onLogout={() => {
+                        logoutUser();
+                        setUser(null);
+                    }}
+                    profileData={profileData}
+                    onGetProfile={handleGetProfile}
+                    onUpdateProfile={() => setIsModalOpen(true)}
+                    onDeleteAccount={handleDeleteAccount}
+                />
             ) : (
                 <div className="max-w-md mx-auto shadow-md rounded-3xl">
                     <AuthPage onLogin={handleLogin} />

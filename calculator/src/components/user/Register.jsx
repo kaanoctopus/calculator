@@ -188,6 +188,7 @@ export default function Register({ onSwitchToLogin }) {
                         <input
                             type="email"
                             name="email"
+                            autoComplete="off"
                             value={formData.email}
                             placeholder="name@company.com"
                             onChange={handleChange}
@@ -212,6 +213,7 @@ export default function Register({ onSwitchToLogin }) {
                             type="password"
                             name="password"
                             value={formData.password}
+                            autoComplete="off"
                             placeholder="••••••••"
                             onChange={handleChange}
                             className={`${INPUTBOX_CSS} ${
@@ -237,6 +239,7 @@ export default function Register({ onSwitchToLogin }) {
                             value={formData.confirmPassword}
                             placeholder="••••••••"
                             onChange={handleChange}
+                            autoComplete="off"
                             className={`${INPUTBOX_CSS} ${
                                 errors.confirmPassword
                                     ? "border-red-500"

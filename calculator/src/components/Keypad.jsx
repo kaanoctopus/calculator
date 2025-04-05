@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const NUMBER_COLOR = "bg-white";
 const OPERATOR_COLOR = "bg-gray-200";
@@ -6,6 +7,20 @@ const RESET_COLOR = "bg-red-500 text-white";
 const RESULT_COLOR = "bg-blue-500 text-white";
 
 export default function Keypad({ onKeyPress }) {
+    const [disableAnimations, setDisableAnimations] = useState(false);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === "Enter") {
+                setDisableAnimations(true);
+                setTimeout(() => setDisableAnimations(false), 100);
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, []);
+
     const keys = [
         { value: "c", color: RESET_COLOR },
         { value: "(", color: OPERATOR_COLOR },
@@ -42,7 +57,7 @@ export default function Keypad({ onKeyPress }) {
             {keys.map((key) => (
                 <motion.button
                     key={key.value}
-                    whileTap={{ scale: 0.9 }}
+                    whileTap={disableAnimations ? {} : { scale: 0.9 }}
                     className={`p-4 rounded-xl shadow hover:bg-opacity-50 text-xl font-medium ${
                         key.color
                     } ${key.className || ""}`}
