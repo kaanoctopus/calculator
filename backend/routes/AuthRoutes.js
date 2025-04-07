@@ -26,9 +26,9 @@ const router = express.Router();
 const authService = new AuthService();
 const authController = new AuthController(authService);
 
-router.use(securityHeaders);
+// router.use(securityHeaders);
 router.use(cors());
-router.use(sanitizeInput);
+// router.use(sanitizeInput);
 
 router.options("*", (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
