@@ -1,6 +1,6 @@
 const BACKUP_API_BASE = "https://calcbackend.netlify.app/api";
-const PRIMARY_API_BASE =
-    "https://6hkhcefyhrrnzjd3siqho25hte0lngbi.lambda-url.eu-north-1.on.aws/api";
+const PRIMARY_API_BASE ="https://calcbackend.netlify.app/api";
+    //"https://6hkhcefyhrrnzjd3siqho25hte0lngbi.lambda-url.eu-north-1.on.aws/api";
 const AUTH_ENDPOINT = "/auth";
 const FAILOVER_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
 
