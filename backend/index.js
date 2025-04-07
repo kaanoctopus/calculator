@@ -28,15 +28,15 @@
 // module.exports.handler = serverless(app);
 
 const path = require("path");
-require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
+require("dotenv").config({ path: path.resolve(__dirname, ".env") });
 
 const express = require("express");
 const serverless = require("serverless-http");
 const cors = require("cors");
 const { PrismaClient } = require("@prisma/client");
 
-const calculationRoutes = require("../../routes/CalculationRoutes");
-const authRoutes = require("../../routes/AuthRoutes");
+const calculationRoutes = require("routes/CalculationRoutes");
+const authRoutes = require("routes/AuthRoutes");
 
 const prisma = new PrismaClient();
 const app = express();

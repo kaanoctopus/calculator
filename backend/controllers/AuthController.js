@@ -53,6 +53,9 @@ class AuthController {
     async login(req, res) {
         try {
             const { email, password } = req.body;
+            if (!email || !email.includes('@')) {
+                return res.status(400).json({ error: "Valid email is required" });
+            }
             const result = await this.authService.login(email, password);
 
             res.json(result);
