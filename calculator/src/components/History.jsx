@@ -3,7 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function History({ items, onClear }) {
     const [height, setHeight] = useState("500px");
-
+    for (let i = 0; i < items.length; ++i) {
+        items[i] = items[i].replace(/ deg/g, "");
+    }
     useEffect(() => {
         const updateHeight = () => {
             const calculator = document.querySelector("#calculator");

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 const NUMBER_COLOR = "bg-white";
 const OPERATOR_COLOR = "bg-gray-200";
+const SCIENCE_OPERATOR_COLOR = "bg-gray-500 text-white";
 const RESET_COLOR = "bg-red-500 text-white";
 const RESULT_COLOR = "bg-blue-500 text-white";
 
@@ -22,6 +23,14 @@ export default function Keypad({ onKeyPress }) {
     }, []);
 
     const keys = [
+        { value: "sin", color: SCIENCE_OPERATOR_COLOR },
+        { value: "cos", color: SCIENCE_OPERATOR_COLOR },
+        { value: "tan", color: SCIENCE_OPERATOR_COLOR },
+        { value: "π", color: SCIENCE_OPERATOR_COLOR },
+        { value: "log", color: SCIENCE_OPERATOR_COLOR },
+        { value: "^", color: SCIENCE_OPERATOR_COLOR },
+        { value: "√", color: SCIENCE_OPERATOR_COLOR },
+        { value: "!", color: SCIENCE_OPERATOR_COLOR },
         { value: "c", color: RESET_COLOR },
         { value: "(", color: OPERATOR_COLOR },
         { value: ")", color: OPERATOR_COLOR },
