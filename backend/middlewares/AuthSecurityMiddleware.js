@@ -20,26 +20,7 @@ exports.passwordResetLimiter = rateLimit({
   message: "Too many password reset attempts from this IP, please try again later"
 });
 
-exports.securityHeaders = helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'"],
-      fontSrc: ["'self'"],
-      objectSrc: ["'none'"],
-      mediaSrc: ["'self'"]
-    }
-  },
-  hsts: {
-    maxAge: 31536000, // 1 year
-    includeSubDomains: true,
-    preload: true
-  },
-  referrerPolicy: { policy: 'same-origin' }
-});
+exports.securityHeaders = helmet();
 
 exports.sanitizeInput = (req, res, next) => {
   for (const key in req.body) {
