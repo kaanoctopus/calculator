@@ -1,5 +1,5 @@
 const express = require("express");
-const { body, check, param } = require("express-validator");
+const { body } = require("express-validator");
 const AuthService = require("../services/AuthService");
 const AuthController = require("../controllers/AuthController");
 const authMiddleware = require("../middlewares/AuthMiddleware");
@@ -33,7 +33,7 @@ router.options("*", (req, res) => {
 });
 
 router.post("/register", [
-  apiLimiter,
+    authLimiter,
   body("firstName").trim().notEmpty().withMessage("First name is required"),
   body("lastName").trim().notEmpty().withMessage("Last name is required"),
   body("email").trim().isEmail().withMessage("Valid email is required"),
