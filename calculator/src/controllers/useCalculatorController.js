@@ -28,45 +28,49 @@ const transformSpecialInput = (key) => {
     return transformations[key] || key;
 };
 
-const transformForEvaluation = (expr) => {
-    const addDegToFunction = (funcName, input) => {
-        return `${funcName}(${transformForEvaluation(input)} deg)`;
-    };
+const isFunctionCall = (expr, i) => {
+    return (expr[i] === 's' || expr[i] === 'n') && expr[i + 1] === '(';
+};
 
-    let stack = [];
+const extractInnerExpression = (expr, startIndex) => {
+    let count = 1;
+    let inner = '';
+    let i = startIndex + 2;
+
+    while (i < expr.length && count > 0) {
+        if (expr[i] === '(') count++;
+        else if (expr[i] === ')') count--;
+
+        if (count > 0) inner += expr[i];
+        i++;
+    }
+
+    return { inner, nextIndex: i };
+};
+
+const transformFunctionCall = (funcName, inner) => {
+    return `${funcName}(${transformForEvaluation(inner)} deg)`;
+};
+
+const transformForEvaluation = (expr) => {
     let result = '';
     let i = 0;
 
     while (i < expr.length) {
-        if (expr[i] === 's' || expr[i] === 'n') {
-            let funcName = expr[i];
-            if (expr[i + 1] === '(') {
-                stack.push({ func: funcName, start: i });
-                i += 2;
-                let count = 1;
-                let inner = '';
-
-                while (i < expr.length && count > 0) {
-                    if (expr[i] === '(') count++;
-                    else if (expr[i] === ')') count--;
-
-                    if (count > 0) inner += expr[i];
-                    i++;
-                }
-
-                const transformed = addDegToFunction(funcName, inner);
-                result += transformed;
-            } else {
-                result += expr[i];
-                i++;
-            }
+        if (isFunctionCall(expr, i)) {
+            const funcName = expr[i];
+            const { inner, nextIndex } = extractInnerExpression(expr, i);
+            result += transformFunctionCall(funcName, inner);
+            i = nextIndex;
         } else {
             result += expr[i];
             i++;
         }
     }
+
     return result;
 };
+
 
 
 const validateEquals = (expr, lastChar) => {

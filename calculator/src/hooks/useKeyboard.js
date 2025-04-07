@@ -9,7 +9,7 @@ export default function useKeyboard(handleKeyPress) {
                 return;
             }
 
-            const validKeys = "cC()0123456789/*-+.=";
+            const validKeys = "cC()0123456789/*-+.=!";
             if (validKeys.includes(e.key)) {
                 handleKeyPress(e.key);
             }
