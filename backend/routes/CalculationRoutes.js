@@ -3,6 +3,7 @@ const CalculationService = require("../services/CalculationService");
 const CalculationController = require("../controllers/CalculationController");
 const authMiddleware = require("../middlewares/AuthMiddleware");
 const { calcLimiter } = require("../middlewares/RateLimiter");
+const { validateCalculation } = require("../middlewares/CalculateValidationMiddleware");
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.options("*", (req, res) => {
   res.sendStatus(204);
 });
 
-router.post("/calculate", authMiddleware, calcLimiter, calculationController.calculate);
+router.post("/calculate", authMiddleware, validateCalculation, calcLimiter, calculationController.calculate);
 router.get("/history", authMiddleware, calculationController.getHistory);
 router.delete("/history", authMiddleware, calculationController.clearHistory);
 
